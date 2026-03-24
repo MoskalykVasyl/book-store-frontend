@@ -46,11 +46,13 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+    --color-my-color: var(--my-color); /* add custom color variable */
 }
 
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
+    --my-color: oklch(0.577 0.245 27.325); /* add custom color value */
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
