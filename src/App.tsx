@@ -6,7 +6,14 @@ import { BookPage } from './page/BookPage'
 import { WishlistPage } from './page/WishListPage'
 import { RegisterPage } from './page/RegisterPage'
 
+
+
+
 const App = () => {
+
+ 
+  
+
   return (
     <Routes>
       <Route element={<MainLayout />}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm} from "react-hook-form"
 import { Button } from '@/components/ui/button';
 import {
@@ -14,27 +14,42 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import api from '@/lib/axios';
+import { useAuth } from '@/context/AuthContext';
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
+  const { token, setToken } = useAuth();
+
+ 
 
   const { handleSubmit, register, formState: {errors}} = useForm<LoginSchema>({
     resolver: zodResolver(loginShema),
     mode: 'onChange',
     defaultValues: {
-        email: '',
-        password: ''
+        email: 'test22@gmail.com',
+        password: '123456'
     }
   })
 
   const onSubmit = async (data: LoginSchema) => {
-      console.log(data)
-        // тут буде  запит на бекенд (NestJS)
-        setTimeout(() => {
+        try {
+          setLoading(true);
+          const response = await api.post('/auth/login', data);
+          setToken(response.data.access_token);
+        } catch (error) {
+          console.error('Login failed:', error);
+        }
+        finally {
           setLoading(false);
-        }, 1000);
+        }
+       
+
     }
   
+     useEffect(() => {
+    console.log('Token in LoginForm:', token);
+  }, [token]);
 
   return (
     <SheetContent className="w-full px-5 sm:max-w-md">
