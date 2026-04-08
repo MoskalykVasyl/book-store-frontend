@@ -5,6 +5,7 @@ import { Home } from './page/HomePage'
 import { BookPage } from './page/BookPage'
 import { WishlistPage } from './page/WishListPage'
 import { RegisterPage } from './page/RegisterPage'
+import { AdminRoute } from './routes/AdminRout'
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='wish-list' element={<WishlistPage />} />
         <Route path='register' element={<RegisterPage />} />
         <Route path='checkout' element={<h1>Checkout</h1>} />
+        <Route path='admin' element={ <AdminRoute><h1>Admin page</h1></AdminRoute>} />
         <Route path='*' element={<h1>Not Found</h1>} />
       </Route>
     </Routes>

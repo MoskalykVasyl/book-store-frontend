@@ -23,18 +23,18 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     //     fetchMe();
     // }, [])
 
-    // useLayoutEffect(()=>{
-    //     const authInterceptor = api.interceptors.request.use((config) => {
-    //         config.headers.Authorization = token ? `Bearer ${token}` : undefined;
-    //         return config;
-    //     });
+    useLayoutEffect(()=>{
+        const authInterceptor = api.interceptors.request.use((config) => {
+            config.headers.Authorization = token ? `Bearer ${token}` : undefined;
+            return config;
+        });
 
-    //     console.log('useLayoutEffect ran auth interceptor')
+        console.log('useLayoutEffect ran auth interceptor')
 
-    //     return () => {
-    //         api.interceptors.request.eject(authInterceptor);
-    //     }
-    // }, [token])
+        return () => {
+            api.interceptors.request.eject(authInterceptor);
+        }
+    }, [token])
 
 //     useLayoutEffect(() => {
 //   const interceptor = api.interceptors.response.use(

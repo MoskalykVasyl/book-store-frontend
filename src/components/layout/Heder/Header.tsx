@@ -6,8 +6,14 @@ import { Sheet, SheetTrigger } from '@/components/ui/sheet';
 import { LoginForm } from '@/components/forms/LoginFom';
 import { Link } from 'react-router';
 import { Cart } from '@/components/common/Cart';
+import { useState } from 'react';
+import { useMe } from '@/features/useMe';
 
 export const Header = () => {
+  const [isOpenSignIn, setIsOpenSignIn] = useState(false);
+  const { data } = useMe();
+  const user = data?.data;
+
   return (
     <header className="flex items-center justify-between gap-1 pt-2 h-16">
       <div className="flex items-center justify-center">
@@ -20,22 +26,30 @@ export const Header = () => {
           className="w-40 focus:w-60 transition-all duration-300"
           placeholder="Search..."
         />
+        <Link to={'admin'}>
+          <p>ADMIN</p>
+        </Link>
       </div>
       <div className="flex items-center gap-2  ">
         <User className="cursor-pointer " />
-        <Sheet>
-          <SheetTrigger>
-            <span>Sign in</span>
-          </SheetTrigger>
-          <LoginForm />
-        </Sheet>
+        {user ? (
+          <span>{user.displayName}</span>
+        ) : (
+          <Sheet open={isOpenSignIn} onOpenChange={setIsOpenSignIn}>
+            <SheetTrigger>
+              <span>Sign in</span>
+            </SheetTrigger>
+            <LoginForm onSuccess={() => setIsOpenSignIn(false)} />
+          </Sheet>
+        )}
+
         <Separator orientation="vertical" />
         <Link to={'wish-list'}>
           <Heart className="cursor-pointer " />
         </Link>
         <Sheet>
           <SheetTrigger>
-        <ShoppingCart className="cursor-pointer " />
+            <ShoppingCart className="cursor-pointer " />
           </SheetTrigger>
           <Cart />
         </Sheet>
