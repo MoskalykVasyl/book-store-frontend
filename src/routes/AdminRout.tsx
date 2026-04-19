@@ -20,7 +20,7 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
     return <Navigate to="/register" replace />;
   }
 
-  if (user.role !== 'REGULAR') {
+  if (user.role !== 'ADMIN') {
     return <Navigate to="/" replace />;
   }
 

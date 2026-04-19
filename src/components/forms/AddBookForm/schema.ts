@@ -18,7 +18,7 @@ export const addBookSchema = z.object({
   countPage: z.number("Please enter a number").positive('Count of pages must be a positive number!'),
   publicYear: z.number("Please enter a number").positive('Year must be a positive number!'),
   imageUrl: z.string().url('Image URL must be a valid URL!'),
-//   authorId: z.string().min(1, 'Author ID is required!'),
+  authorId: z.string().min(1, 'Author ID is required!'),
   genre: z.enum(
     Genres,
     'Genre must be one of the following: Fantasy, Mystery, Horror, RomanceNovel, Biography, Detective!',

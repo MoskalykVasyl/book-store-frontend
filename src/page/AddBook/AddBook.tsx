@@ -21,7 +21,6 @@ export const AddBook = () => {
           <CardHeader>
             <CardTitle>Book Information</CardTitle>
           </CardHeader>
-
           <CardContent>
            <AddBookForm />
           </CardContent>
