@@ -8,20 +8,14 @@ import {
 } from '../ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
+import type { Book } from '@/types/api/book';
 
-export type Book = {
-  id: number;
-  title: string;
-  author: string;
-  price: number;
-  image: string;
-  isFavorite?: boolean;
-};
+
 
 interface BookItemProps {
   book: Book;
-  onToggleFavorite?: (id: number) => void;
-  onAddToCart?: (id: number) => void;
+  onToggleFavorite?: (id: string) => void;
+  onAddToCart?: (id: string) => void;
 }
 
 export const BookItem = ({
@@ -59,7 +53,7 @@ export const BookItem = ({
 
       {/* IMAGE */}
       <img
-        src={book.image}
+        src={book.imageUrl}
         alt={book.title}
         className="h-40 w-full object-contain p-2"
       />
@@ -69,7 +63,7 @@ export const BookItem = ({
         <CardTitle className="line-clamp-2 wrap-break-word">
           {book.title}
         </CardTitle>
-        <CardDescription>{book.author}</CardDescription>
+        <CardDescription>{book.author.firstName} {book.author.lastName}</CardDescription>
       </CardHeader>
 
       {/* FOOTER */}
