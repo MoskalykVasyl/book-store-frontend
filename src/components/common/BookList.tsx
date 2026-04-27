@@ -3,7 +3,6 @@ import { BookItem } from "./BookItem"
 
 interface BookListProps {
   books: Book[] | undefined;
-  onToggleFavorite?: (id: string) => void;
   onAddToCart?: (id: string) => void;
 }
 
@@ -11,7 +10,6 @@ interface BookListProps {
 
 export const BookList = ({
   books,
-  onToggleFavorite,
   onAddToCart,
 }: BookListProps) => {
   return (
@@ -20,7 +18,6 @@ export const BookList = ({
         <BookItem
           key={book.id}
           book={book}
-          onToggleFavorite={onToggleFavorite}
           onAddToCart={onAddToCart}
         />
       ))}

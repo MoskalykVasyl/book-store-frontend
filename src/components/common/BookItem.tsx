@@ -9,37 +9,42 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
 import type { Book } from '@/types/api/book';
-
-
+import { useAddToWishList } from '@/features/useAddToWishList';
+import { useRemoveFromWishList } from '@/features/useRemoveFromWishList';
 
 interface BookItemProps {
   book: Book;
-  onToggleFavorite?: (id: string) => void;
   onAddToCart?: (id: string) => void;
 }
 
-export const BookItem = ({
-  book,
-  onToggleFavorite,
-  onAddToCart,
-}: BookItemProps) => {
+export const BookItem = ({ book, onAddToCart }: BookItemProps) => {
+  const { mutateAsync: addToWishList } = useAddToWishList();
+  const { mutateAsync: removeFromWishList } = useRemoveFromWishList();
+
+  const handleClickOnHeart = (bookId: string) => {
+    if (book.isFavorite) {
+      removeFromWishList(bookId);
+    } else {
+      addToWishList(bookId);
+    }
+  };
+
   return (
     <Card className="relative w-48 mt-4 transition hover:shadow-lg hover:-translate-y-1">
-      
       {/* FAVORITE */}
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => onToggleFavorite?.(book.id)}
+            onClick={() => handleClickOnHeart(book.id)}
             className="absolute right-2 top-2 group"
           >
             <Heart
               className={`
                 transition
                 stroke-current
-                ${book.isFavorite ? "fill-red-600 stroke-red-600" : "fill-transparent"}
+                ${book.isFavorite ? 'fill-red-600 stroke-red-600' : 'fill-transparent'}
                 group-hover:fill-red-600
                 group-hover:stroke-red-600
               `}
@@ -47,7 +52,7 @@ export const BookItem = ({
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          {book.isFavorite ? "Remove from wishlist" : "Add to wishlist"}
+          {book.isFavorite ? 'Remove from wishlist' : 'Add to wishlist'}
         </TooltipContent>
       </Tooltip>
 
@@ -63,7 +68,9 @@ export const BookItem = ({
         <CardTitle className="line-clamp-2 wrap-break-word">
           {book.title}
         </CardTitle>
-        <CardDescription>{book.author.firstName} {book.author.lastName}</CardDescription>
+        <CardDescription>
+          {book.author.firstName} {book.author.lastName}
+        </CardDescription>
       </CardHeader>
 
       {/* FOOTER */}
