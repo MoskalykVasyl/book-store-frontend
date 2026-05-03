@@ -30,8 +30,8 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     resolver: zodResolver(loginShema),
     mode: 'onChange',
     defaultValues: {
-      email: 'test22@gmail.com',
-      password: '123456',
+      email: 'admin@gmail.com',
+      password: 'admin1',
     },
   });
 

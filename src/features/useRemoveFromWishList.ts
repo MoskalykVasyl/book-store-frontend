@@ -37,6 +37,7 @@ export const useRemoveFromWishList = () => {
         
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wishList']});
       toast.success('Book removed from wishlist successfully!');
     },
   });

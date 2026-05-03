@@ -23,7 +23,7 @@ export const useLogin = ({ onSuccess }: UseLoginOptions) => {
     mutationFn: loginApi,
     onSuccess: (res) => {
       setToken(res.data.access_token);
-      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['me', 'wishlist'] });
       onSuccess?.();
     },
     onError: (error) => {
