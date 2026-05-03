@@ -24,3 +24,7 @@ export type Book = {
   author: Author;
   isFavorite?: boolean;
 };
+
+export interface CartItem extends Pick<Book, 'id' | 'title' | 'price' | 'imageUrl'>  {
+  quantity: number;
+}

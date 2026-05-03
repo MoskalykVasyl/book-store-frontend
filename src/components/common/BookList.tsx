@@ -3,14 +3,12 @@ import { BookItem } from "./BookItem"
 
 interface BookListProps {
   books: Book[] | undefined;
-  onAddToCart?: (id: string) => void;
 }
 
 
 
 export const BookList = ({
-  books,
-  onAddToCart,
+  books
 }: BookListProps) => {
   return (
     <div className="flex justify-center gap-5 w-full flex-wrap">
@@ -18,7 +16,6 @@ export const BookList = ({
         <BookItem
           key={book.id}
           book={book}
-          onAddToCart={onAddToCart}
         />
       ))}
     </div>

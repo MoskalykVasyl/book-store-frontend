@@ -11,15 +11,16 @@ import { Button } from '../ui/button';
 import type { Book } from '@/types/api/book';
 import { useAddToWishList } from '@/features/useAddToWishList';
 import { useRemoveFromWishList } from '@/features/useRemoveFromWishList';
+import { useCart } from '@/context/CartContext';
 
 interface BookItemProps {
   book: Book;
-  onAddToCart?: (id: string) => void;
 }
 
-export const BookItem = ({ book, onAddToCart }: BookItemProps) => {
+export const BookItem = ({ book }: BookItemProps) => {
   const { mutateAsync: addToWishList } = useAddToWishList();
   const { mutateAsync: removeFromWishList } = useRemoveFromWishList();
+  const { addToCart } = useCart();
 
   const handleClickOnHeart = (bookId: string) => {
     if (book.isFavorite) {
@@ -81,7 +82,15 @@ export const BookItem = ({ book, onAddToCart }: BookItemProps) => {
           <TooltipTrigger asChild>
             <Button
               size="icon"
-              onClick={() => onAddToCart?.(book.id)}
+              onClick={() =>
+                addToCart({
+                  id: book.id,
+                  title: book.title,
+                  price: book.price,
+                  imageUrl: book.imageUrl,
+                  quantity: 1,
+                })
+              }
               className="bg-amber-400 hover:bg-amber-500 transition-transform hover:rotate-12 duration-500"
             >
               <ShoppingCart />

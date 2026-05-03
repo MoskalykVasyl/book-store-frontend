@@ -8,9 +8,11 @@ import { Link } from 'react-router';
 import { Cart } from '@/components/common/Cart';
 import { useState } from 'react';
 import { useMe } from '@/features/useMe';
+import { useCart } from '@/context/CartContext';
 
 export const Header = () => {
   const [isOpenSignIn, setIsOpenSignIn] = useState(false);
+  const { totalItems } = useCart();
   const { data } = useMe();
   const user = data?.data;
 
@@ -50,6 +52,11 @@ export const Header = () => {
         <Sheet>
           <SheetTrigger>
             <ShoppingCart className="cursor-pointer " />
+            {totalItems > 0 && (
+              <span className="absolute top-2 right-2 flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold ">
+                {totalItems}
+              </span>
+            )}
           </SheetTrigger>
           <Cart />
         </Sheet>
