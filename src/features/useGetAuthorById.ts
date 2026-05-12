@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const getAuthorByIdApi = async(authorId: string) => {
     const {data} = await api.get(`/authors/by-id/${authorId}`);
-    console.log(data)
     return data;
 }
 
