@@ -1,5 +1,8 @@
 import { BookList } from '@/components/common/BookList';
-import { useGetAllBooks } from '@/features/useGetAllBooks';
+import { SelectBookFilter } from '@/components/common/SelectBookFilter';
+// import { useGetAllBooks } from '@/features/useGetAllBooks';
+import { useGetBooks } from '@/features/useGetBooks';
+import { useSearchParams } from 'react-router';
 
 // export const mockBooks = [
 //   {
@@ -80,10 +83,14 @@ import { useGetAllBooks } from '@/features/useGetAllBooks';
 // ];
 
 export const Home = () => {
-  const { data, isLoading } = useGetAllBooks();
+  // const { data, isLoading } = useGetAllBooks();
+  const [searchParams] = useSearchParams();
+  const genre = searchParams.get('genre') || undefined;
+  const { data, isLoading } = useGetBooks(genre);
   return (
     <div>
       <h2 className="text-3xl">New books</h2>
+      <SelectBookFilter />
       {isLoading ? (
         <p>Loading...</p>
       ) : (
