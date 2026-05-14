@@ -1,4 +1,4 @@
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart, Check } from 'lucide-react';
 import {
   Card,
   CardDescription,
@@ -13,6 +13,7 @@ import { useAddToWishList } from '@/features/useAddToWishList';
 import { useRemoveFromWishList } from '@/features/useRemoveFromWishList';
 import { useCart } from '@/context/CartContext';
 import { Link } from 'react-router';
+import { useIsBookInCart } from '@/hooks/useIsBookInCart';
 
 interface BookItemProps {
   book: Book;
@@ -22,6 +23,7 @@ export const BookItem = ({ book }: BookItemProps) => {
   const { mutateAsync: addToWishList } = useAddToWishList();
   const { mutateAsync: removeFromWishList } = useRemoveFromWishList();
   const { addToCart } = useCart();
+  const isInCart = useIsBookInCart(book.id);
 
   const handleClickOnHeart = (bookId: string) => {
     if (book.isFavorite) {
@@ -52,8 +54,6 @@ export const BookItem = ({ book }: BookItemProps) => {
                 transition
                 stroke-current
                 ${book.isFavorite ? 'fill-red-600 stroke-red-600' : 'fill-transparent'}
-                group-hover:fill-red-600
-                group-hover:stroke-red-600
               `}
               />
             </Button>
@@ -91,6 +91,7 @@ export const BookItem = ({ book }: BookItemProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+
                   addToCart({
                     id: book.id,
                     title: book.title,
@@ -99,12 +100,19 @@ export const BookItem = ({ book }: BookItemProps) => {
                     quantity: 1,
                   });
                 }}
-                className="bg-amber-400 hover:bg-amber-500 transition-transform hover:rotate-12 duration-500"
+                className={`transition-transform duration-500 hover:rotate-12 ${
+                  isInCart
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : 'bg-amber-400 hover:bg-amber-500'
+                }`}
               >
-                <ShoppingCart />
+                {isInCart ? <Check /> : <ShoppingCart />}
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Add book to cart</TooltipContent>
+
+            <TooltipContent>
+              {isInCart ? 'Book already in cart' : 'Add book to cart'}
+            </TooltipContent>
           </Tooltip>
         </CardFooter>
       </Card>

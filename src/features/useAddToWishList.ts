@@ -38,8 +38,10 @@ export const useAddToWishList = () => {
     onSuccess: () => {
       toast.success('Book added to wishlist successfully!');
     },
-    onSettled: () => {
+    onSettled: (bookId) => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({queryKey: ['book', bookId]});
+      queryClient.invalidateQueries({ queryKey: ['wishList']});
     },
   });
 };
