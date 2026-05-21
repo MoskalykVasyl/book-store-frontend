@@ -1,4 +1,3 @@
-import { Input } from '@/components/ui/input';
 import Logo from '../../../assets/book-store.png';
 import { User, Heart, ShoppingCart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -9,6 +8,7 @@ import { Cart } from '@/components/common/Cart';
 import { useState } from 'react';
 import { useMe } from '@/features/useMe';
 import { useCart } from '@/context/CartContext';
+import { SearchBooks } from './Search/Search.Books';
 
 export const Header = () => {
   const [isOpenSignIn, setIsOpenSignIn] = useState(false);
@@ -23,11 +23,13 @@ export const Header = () => {
           <img className="h-16" src={Logo} alt="Book Store Logo" />
         </Link>
 
-        <Input
+        {/* <Input
           type="search"
           className="w-40 focus:w-60 transition-all duration-300"
           placeholder="Search..."
-        />
+        /> */}
+        <SearchBooks />
+
         <Link to={'admin'}>
           <p>ADMIN</p>
         </Link>
