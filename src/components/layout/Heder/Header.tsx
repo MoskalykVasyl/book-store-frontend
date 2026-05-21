@@ -1,4 +1,4 @@
-import Logo from '../../../assets/book-store.png';
+import Logo from '../../../assets/books-stack-svgrepo-com.svg';
 import { User, Heart, ShoppingCart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetTrigger } from '@/components/ui/sheet';
@@ -20,14 +20,8 @@ export const Header = () => {
     <header className="flex items-center justify-between gap-1 pt-2 h-16">
       <div className="flex items-center justify-center">
         <Link to={'/'}>
-          <img className="h-16" src={Logo} alt="Book Store Logo" />
+          <img className="h-14 mr-2" src={Logo} alt="Book Store Logo" />
         </Link>
-
-        {/* <Input
-          type="search"
-          className="w-40 focus:w-60 transition-all duration-300"
-          placeholder="Search..."
-        /> */}
         <SearchBooks />
 
         <Link to={'admin'}>

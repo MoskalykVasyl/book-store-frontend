@@ -61,7 +61,7 @@ export const SearchBooks = () => {
             <CommandList className="max-h-96 overflow-y-auto">
               {isLoading && <div className="p-4 text-sm">Loading...</div>}
 
-              {!isLoading && query.length > 1 && data?.length === 0 && (
+              {!isLoading  && query.length > 1 && data?.length === 0 && (
                 <CommandEmpty>No books found.</CommandEmpty>
               )}
 
