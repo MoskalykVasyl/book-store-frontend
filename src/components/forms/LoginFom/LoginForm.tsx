@@ -31,7 +31,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     mode: 'onChange',
     defaultValues: {
       email: 'admin@gmail.com',
-      password: 'admin1',
+      password: '123456',
     },
   });
 

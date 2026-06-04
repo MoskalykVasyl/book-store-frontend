@@ -4,57 +4,69 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { registerSchema, type RegisterSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRegister } from '@/features/useRegister';
 
 export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema), mode: 'onChange' });
+  } = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    mode: 'onChange',
+  });
+
+  const registerMutation = useRegister();
 
   const onSubmit = (data: RegisterSchema) => {
-    console.log(data)
+    const { confirmPassword, ...registerData } = data;
+    registerMutation.mutate(registerData);
+    reset();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      
-          <Field data-invalid={!!errors.email}>
-            <FieldLabel>Email</FieldLabel>
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              {...register("email")}
-            />
-            {errors.email && (
-              <FieldError errors={[errors.email]} />
-            )}
-          </Field>
+      <Field data-invalid={!!errors.email}>
+        <FieldLabel>Email</FieldLabel>
+        <Input
+          type="email"
+          placeholder="Enter your email"
+          {...register('email')}
+        />
+        {errors.email && <FieldError errors={[errors.email]} />}
+      </Field>
 
-          
-          <Field data-invalid={!!errors.password}>
-            <FieldLabel>Password</FieldLabel>
-            <Input
-              type="password"
-              placeholder="Enter password"
-              {...register("password")}
-            />
-            {errors.password && (
-              <FieldError errors={[errors.password]} />
-            )}
-          </Field>
+      <Field data-invalid={!!errors.displayName}>
+        <FieldLabel>Display Name</FieldLabel>
+        <Input
+          type="text"
+          placeholder="Enter your displayname"
+          {...register('displayName')}
+        />
+        {errors.displayName && <FieldError errors={[errors.displayName]} />}
+      </Field>
 
-          
-          <Field data-invalid={!!errors.confirmPassword}>
-            <FieldLabel>Confirm Password</FieldLabel>
-            <Input
-              type="password"
-              placeholder="Repeat password"
-              {...register("confirmPassword")}
-            />
-            {errors.confirmPassword && (
-              <FieldError errors={[errors.confirmPassword]} />
-            )}
-          </Field>
+      <Field data-invalid={!!errors.password}>
+        <FieldLabel>Password</FieldLabel>
+        <Input
+          type="password"
+          placeholder="Enter password"
+          {...register('password')}
+        />
+        {errors.password && <FieldError errors={[errors.password]} />}
+      </Field>
+
+      <Field data-invalid={!!errors.confirmPassword}>
+        <FieldLabel>Confirm Password</FieldLabel>
+        <Input
+          type="password"
+          placeholder="Repeat password"
+          {...register('confirmPassword')}
+        />
+        {errors.confirmPassword && (
+          <FieldError errors={[errors.confirmPassword]} />
+        )}
+      </Field>
 
       <Button type="submit" className="w-full">
         Register
