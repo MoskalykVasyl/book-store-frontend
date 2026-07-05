@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useMe } from '@/features/useMe';
 import { useCart } from '@/context/CartContext';
 import { SearchBooks } from './Search/Search.Books';
+import { AdminButton } from '@/components/common/AdminButton';
 
 export const Header = () => {
   const [isOpenSignIn, setIsOpenSignIn] = useState(false);
@@ -24,9 +25,10 @@ export const Header = () => {
         </Link>
         <SearchBooks />
 
-        <Link to={'admin'}>
+        {/* <Link to={'admin'}>
           <p>ADMIN</p>
-        </Link>
+        </Link> */}
+        <AdminButton />
       </div>
       <div className="flex items-center gap-2  ">
         <User className="cursor-pointer " />

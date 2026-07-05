@@ -10,6 +10,7 @@ export function AdminSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
+        <NavLink to={'/'} className={'block px-2 py-1 rounded-md transition text-muted-foreground hover:bg-accent '}>Home</NavLink>
         <NavLink
           to="/admin"
           end
