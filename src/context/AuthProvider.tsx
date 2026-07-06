@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
