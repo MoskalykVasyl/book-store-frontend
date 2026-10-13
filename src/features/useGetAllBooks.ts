@@ -1,4 +1,4 @@
-import { useAuth } from '@/context/AuthContext';
+
 import api from '@/lib/axios';
 import type { Book } from '@/types/api/book';
 import { useQuery } from '@tanstack/react-query';
@@ -8,11 +8,10 @@ const getAllBooksApi = async () => {
   return data;
 };
 
+// all book for unauthenticated users, for first time loading
 export const useGetAllBooks = () => {
-  const {token, isAuthLoading} = useAuth();
   return useQuery({
-    queryKey: ['books', token ? 'auth' : 'guest'],
+    queryKey: ['books-all',],
     queryFn: getAllBooksApi,
-    enabled: !isAuthLoading,
   });
 };
