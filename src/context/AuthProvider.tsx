@@ -1,5 +1,5 @@
 import api from '@/lib/axios';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 
 type AuthProviderProps = {
@@ -8,14 +8,17 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchMe = async () => {
       try {
         const response = await api.get('/auth/refresh-token');
         setToken(response.data.accessToken);
       } catch {
         setToken(null);
+      } finally {
+        setIsAuthLoading(false);
       }
     };
 
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, isAuthLoading }}>
       {children}
     </AuthContext.Provider>
   );
