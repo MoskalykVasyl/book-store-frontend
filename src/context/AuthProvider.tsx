@@ -9,7 +9,7 @@ type AuthProviderProps = {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchMe = async () => {
       try {
         const response = await api.get('/auth/refresh-token');
