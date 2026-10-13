@@ -8,6 +8,7 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   useLayoutEffect(() => {
     const fetchMe = async () => {
@@ -16,6 +17,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setToken(response.data.accessToken);
       } catch {
         setToken(null);
+      } finally {
+        setIsAuthLoading(false);
       }
     };
 
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, isAuthLoading }}>
       {children}
     </AuthContext.Provider>
   );
