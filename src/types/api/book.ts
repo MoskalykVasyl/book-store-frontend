@@ -1,6 +1,6 @@
 import { Genres } from '@/components/forms/AddBookForm/schema';
 
-type Author = {
+export type Author = {
   id: string;
   firstName: string;
   lastName: string;

@@ -1,21 +1,15 @@
 import { BookList } from '@/components/common/BookList';
+import { PaginationControl } from '@/components/common/Pagination';
 import { SelectBookFilter } from '@/components/common/SelectBookFilter';
-import { useAuth } from '@/context/AuthContext';
-import { useGetAllBooks } from '@/features/useGetAllBooks';
-// import { useGetAllBooks } from '@/features/useGetAllBooks';
 import { useGetBooks } from '@/features/useGetBooks';
 import { useSearchParams } from 'react-router';
 
 export const Home = () => {
-const { token } = useAuth();
-
   const [searchParams] = useSearchParams();
   const genre = searchParams.get('genre') || undefined;
-  const  guestQuery = useGetAllBooks();
-  const personalQuery  = useGetBooks(genre);
+  const page = Math.max(1, Number(searchParams.get('page')) || 1);
 
- const books = token ? personalQuery.data : guestQuery.data;
-const isLoading = !books;
+  const { data, isLoading, isPlaceholderData } = useGetBooks({genre, page});
   return (
     <div>
       <h2 className="text-3xl">New books</h2>
@@ -23,8 +17,12 @@ const isLoading = !books;
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <BookList books={books} />
+        <div className={isPlaceholderData ? 'opacity-50 transition-opacity' : ''}>
+          <BookList books={data?.items} />
+        </div>
       )}
+
+      {data && <PaginationControl meta={data.meta} />}
     </div>
   );
 };

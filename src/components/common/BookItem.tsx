@@ -8,12 +8,12 @@ import {
 } from '../ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
-import type { Book } from '@/types/api/book';
 import { useAddToWishList } from '@/features/useAddToWishList';
 import { useRemoveFromWishList } from '@/features/useRemoveFromWishList';
 import { useCart } from '@/context/CartContext';
 import { Link } from 'react-router';
 import { useIsBookInCart } from '@/hooks/useIsBookInCart';
+import type { Book } from '@/types/api/books-api.type';
 
 interface BookItemProps {
   book: Book;

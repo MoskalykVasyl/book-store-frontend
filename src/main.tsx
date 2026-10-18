@@ -5,8 +5,8 @@ import './index.css';
 import App from './App.tsx';
 import { AuthProvider } from './context/AuthProvider.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CartProvider } from './context/CartProvider.tsx';
-
 
 const queryClient = new QueryClient();
 
@@ -14,12 +14,12 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <CartProvider>
-
-      <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-      </BrowserRouter>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <App />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </BrowserRouter>
       </CartProvider>
     </AuthProvider>
   </StrictMode>,
