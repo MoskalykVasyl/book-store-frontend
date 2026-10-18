@@ -1,5 +1,6 @@
 import api from "@/lib/axios"
-import type { Book } from "@/types/api/book";
+import type { Book } from "@/types/api/books-api.type";
+
 import { useQuery } from "@tanstack/react-query";
 
 const getWishListApi = async() => {
