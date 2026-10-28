@@ -6,6 +6,21 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 
+// сервер ротує refresh token, тому паралельні запити (StrictMode викликає ефект двічі)
+// мають ділити один запит, інакше другий прийде зі старим cookie і сервер його видалить
+let refreshPromise: Promise<string> | null = null;
+
+const refreshAccessToken = () => {
+  refreshPromise ??= api
+    .post<{ access_token: string }>('/auth/refresh-token')
+    .then((response) => response.data.access_token)
+    .finally(() => {
+      refreshPromise = null;
+    });
+
+  return refreshPromise;
+};
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
@@ -13,8 +28,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useLayoutEffect(() => {
     const fetchMe = async () => {
       try {
-        const response = await api.get('/auth/refresh-token');
-        setToken(response.data.accessToken);
+        setToken(await refreshAccessToken());
       } catch {
         setToken(null);
       } finally {
@@ -50,7 +64,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   //       originalRequest._retry = true;
 
   //       try {
-  //         const response = await api.get('/auth/refresh-token');
+  //         const response = await api.post('/auth/refresh-token');
 
   //         setToken(response.data.access_token);
 
