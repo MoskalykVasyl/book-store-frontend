@@ -1,5 +1,5 @@
 import Logo from '../../../assets/books-stack-svgrepo-com.svg';
-import { User, Heart, ShoppingCart } from 'lucide-react';
+import { User, Heart, ShoppingCart, LogOut } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetTrigger } from '@/components/ui/sheet';
 import { LoginForm } from '@/components/forms/LoginFom';
@@ -10,12 +10,15 @@ import { useMe } from '@/features/useMe';
 import { useCart } from '@/context/CartContext';
 import { SearchBooks } from './Search/Search.Books';
 import { AdminButton } from '@/components/common/AdminButton';
+import { useLogout } from '@/features/useLogout';
+import { Button } from '@/components/ui/button';
 
 export const Header = () => {
   const [isOpenSignIn, setIsOpenSignIn] = useState(false);
   const { totalItems } = useCart();
   const { data } = useMe();
   const user = data?.data;
+  const {mutate: logout, isPending: isLoggingOut} = useLogout();
 
   return (
     <header className="flex items-center justify-between gap-1 pt-2 h-16">
@@ -24,16 +27,24 @@ export const Header = () => {
           <img className="h-14 mr-2" src={Logo} alt="Book Store Logo" />
         </Link>
         <SearchBooks />
-
-        {/* <Link to={'admin'}>
-          <p>ADMIN</p>
-        </Link> */}
-        <AdminButton />
+        {user?.role === 'ADMIN' &&  <AdminButton />}
       </div>
       <div className="flex items-center gap-2  ">
         <User className="cursor-pointer " />
         {user ? (
+          <>
           <span>{user.displayName}</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              title="Log out"
+              aria-label="Log out"
+              onClick={() => logout()}
+              disabled={isLoggingOut}
+            >
+              <LogOut />
+            </Button>
+          </>
         ) : (
           <Sheet open={isOpenSignIn} onOpenChange={setIsOpenSignIn}>
             <SheetTrigger>
