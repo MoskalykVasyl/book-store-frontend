@@ -27,7 +27,7 @@ export const Header = () => {
           <img className="h-14 mr-2" src={Logo} alt="Book Store Logo" />
         </Link>
         <SearchBooks />
-        <AdminButton />
+        {user?.role === 'ADMIN' &&  <AdminButton />}
       </div>
       <div className="flex items-center gap-2  ">
         <User className="cursor-pointer " />
